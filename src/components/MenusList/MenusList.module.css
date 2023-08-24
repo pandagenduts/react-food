@@ -1,0 +1,12 @@
+.menus-list {
+  padding: 0 2em;
+}
+
+.wrapper {
+  margin: 250px auto 0 auto;
+  padding: 2em;
+
+  max-width: 1200px;
+  background-color: beige;
+}
+

@@ -2,6 +2,8 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -9,7 +11,21 @@ html {
 }
 
 body {
-  margin: 0;
-  background-color: #3f3f3f;
+  background-color: #1d1d1d;
 }
 
+#root {
+  padding-bottom: 100px;
+}
+
+.web-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-card:not(:last-child) {
+  border-bottom: 1px solid rgba(77, 77, 77, 0.288);
+}
