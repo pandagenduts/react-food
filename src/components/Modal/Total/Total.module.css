@@ -1,0 +1,11 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.wrapper span {
+  font-weight: 600;
+  font-size: 1.2em;
+}

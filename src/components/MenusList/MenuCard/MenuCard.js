@@ -2,8 +2,17 @@ import React from 'react'
 import classes from './MenuCard.module.css'
 
 const MenuCard = (props) => {
-  const { name: title, description: desc, price } = props.data;
+  const { name: title, description: desc, price, id } = props.data;
 
+  const addHandler = () => {
+    const theMenu = {
+      id: id,
+      title: title,
+      price: price
+    }
+
+    props.cartHandler('ON_ADD', theMenu)
+  }
   return (
     <div className={`${classes['card']} menu-card`}>
 
@@ -18,7 +27,7 @@ const MenuCard = (props) => {
           <label htmlFor="amount">Amount</label>
           <input type="number" name="amount" id="amount" />
         </div>
-        <button>+ Add</button>
+        <button onClick={addHandler}>+ Add</button>
       </div>
 
     </div>

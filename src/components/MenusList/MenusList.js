@@ -8,7 +8,7 @@ function MenusList(props) {
     <section className={classes['menus-list']}>
       <div className={classes['wrapper']}>
         {props.theMenus.map((item) => (
-          <MenuCard data={item} key={item.id}/>
+          <MenuCard data={item} key={item.id} cartHandler={props.cartHandler}/>
         ))}
       </div>
     </section>
