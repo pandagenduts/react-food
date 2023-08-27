@@ -8,11 +8,26 @@ const MenuCard = (props) => {
     const theMenu = {
       id: id,
       title: title,
-      price: price
+      price: price,
+      amount: 1
     }
 
     props.cartHandler('ON_ADD', theMenu)
   }
+
+  const onBlurHandler = event => {
+    console.log(event.target.value);
+    if(event.target.value >= 0) {
+      const theMenu = {
+        id: id,
+        title: title,
+        price: price,
+        amount: event.target.value,
+      }
+      props.cartHandler('ON_CHANGE', theMenu)
+    }
+  }
+
   return (
     <div className={`${classes['card']} menu-card`}>
 
@@ -25,7 +40,7 @@ const MenuCard = (props) => {
       <div className={classes['inner_right']}>
         <div className={classes['wrapper']}>
           <label htmlFor="amount">Amount</label>
-          <input type="number" name="amount" id="amount" />
+          <input type="number" name="amount" id="amount" onBlur={onBlurHandler}/>
         </div>
         <button onClick={addHandler}>+ Add</button>
       </div>

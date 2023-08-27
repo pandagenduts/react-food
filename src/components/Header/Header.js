@@ -12,7 +12,7 @@ function Header(props) {
         <button className={classes.cart} onClick={props.isModalHandler}>
           <CartIcon />
           <span className={classes['button-label']}>Your Cart</span>
-          <span className={classes['number']}>0</span>
+          <span className={classes['number']}>{props.cartAmount}</span>
 
         </button>
 
