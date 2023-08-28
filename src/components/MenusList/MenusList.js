@@ -12,15 +12,11 @@ function MenusList(props) {
           const isMenuExist = onCartMenu.find(menu => menu.id === item.id)
           let onCartAmount = 0;
           if (onCartMenu.length !== 0 && isMenuExist) {
-            console.log(isMenuExist.amount);
             onCartAmount = isMenuExist.amount;
           }
 
           return (<MenuCard data={item} key={item.id} cartHandler={props.cartHandler} onCartAmount={onCartAmount}/>)
         })}
-        {/* {props.theMenus.map((item) => (
-          <MenuCard data={item} key={item.id} cartHandler={props.cartHandler}/>
-        ))} */}
       </div>
     </section>
   )

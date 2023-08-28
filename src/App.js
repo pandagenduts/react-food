@@ -16,7 +16,7 @@ function cartReducer(state, action) {
 
   // this bad boi return the total item on cart, based on latest menu thrown at parameter latestMenu
   function totalItemOnCart(latestMenu) {
-    latestMenu.map(menu => {
+    latestMenu.forEach(menu => {
       theAmount += +menu.amount
     })
   }
@@ -54,9 +54,8 @@ function cartReducer(state, action) {
       }
     }
     case 'ON_CHANGE': {
-      // console.log(action.value);
       if(isMenuExist) {
-        if(action.value.amount === 0 || action.value.amount === '') {
+        if(action.value.amount === 0) {
           const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
           totalItemOnCart(deleteMenu);
           return {

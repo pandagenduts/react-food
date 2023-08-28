@@ -16,7 +16,6 @@ const MenuCard = (props) => {
   }
 
   const onChangeHandler = event => {
-    console.log(event.target.value);
     if(+event.target.value >= 0) {
       const theMenu = {
         id: id,
