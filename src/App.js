@@ -7,13 +7,13 @@ import Modal from './components/Modal/Modal';
 // the lists of menus
 import menus from './api/dummy-meals'
 
-function cartReducer (state, action) {
+function cartReducer(state, action) {
   // console.log(action.type);
   // console.log(action.value);
   const prevMenu = [...state.menu]
   let theAmount = 0;
   const isMenuExist = prevMenu.find(menu => menu.id === action.value.id)
-  
+
   // this bad boi return the total item on cart, based on latest menu thrown at parameter latestMenu
   function totalItemOnCart(latestMenu) {
     latestMenu.map(menu => {
@@ -23,7 +23,7 @@ function cartReducer (state, action) {
 
   switch (action.type) {
     case 'ON_ADD': {
-      if( isMenuExist ) {
+      if (isMenuExist) {
         isMenuExist.amount += 1;
       } else {
         prevMenu.push(action.value)
@@ -36,7 +36,7 @@ function cartReducer (state, action) {
       }
     }
     case 'ON_REMOVE': {
-      if(isMenuExist.amount > 1) {
+      if (isMenuExist.amount > 1) {
         isMenuExist.amount -= 1;
         totalItemOnCart(prevMenu);
         return {
@@ -45,7 +45,7 @@ function cartReducer (state, action) {
         }
       }
       else if (isMenuExist.amount <= 1) {
-        const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id );
+        const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
         totalItemOnCart(deleteMenu);
         return {
           menu: deleteMenu,
@@ -54,7 +54,23 @@ function cartReducer (state, action) {
       }
     }
     case 'ON_CHANGE': {
-      console.log(action.value);
+      // console.log(action.value);
+      if(isMenuExist) {
+        if(action.value.amount === 0 || action.value.amount === '') {
+          const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
+          totalItemOnCart(deleteMenu);
+          return {
+            menu: deleteMenu,
+            amount: theAmount,
+          }
+        }
+        else {
+          isMenuExist.amount = action.value.amount
+        }
+      } 
+      else {
+        prevMenu.push(action.value)
+      }
 
       totalItemOnCart(prevMenu);
       return {
@@ -77,7 +93,7 @@ function App() {
   }
 
   const cartHandler = (type, theMenu) => {
-    dispatchOnCart({type: type, value: theMenu})
+    dispatchOnCart({ type: type, value: theMenu })
   }
 
   return (
@@ -85,8 +101,8 @@ function App() {
       <Header isModalHandler={isModalHandler} cartAmount={onCart.amount} />
       <Hero />
 
-      <MenusList theMenus={menus} cartHandler={cartHandler} onCart={onCart}/>
-      {isModal && <Modal isModalHandler={isModalHandler} onCart={onCart} cartHandler={cartHandler}/>}
+      <MenusList theMenus={menus} cartHandler={cartHandler} onCart={onCart} />
+      {isModal && <Modal isModalHandler={isModalHandler} onCart={onCart} cartHandler={cartHandler} />}
 
     </>
   );
