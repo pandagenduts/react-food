@@ -34,6 +34,7 @@ function cartReducer(state, action) {
         menu: prevMenu,
         amount: theAmount,
       }
+      break;
     }
     case 'ON_REMOVE': {
       if (isMenuExist.amount > 1) {
@@ -52,6 +53,7 @@ function cartReducer(state, action) {
           amount: theAmount,
         }
       }
+      break;
     }
     case 'ON_CHANGE': {
       if(isMenuExist) {
@@ -76,6 +78,7 @@ function cartReducer(state, action) {
         menu: prevMenu,
         amount: theAmount,
       }
+      break;
     }
   }
 }
