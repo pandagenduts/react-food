@@ -20,66 +20,122 @@ function cartReducer(state, action) {
       theAmount += +menu.amount
     })
   }
+  
+  if(action.type === 'ON_ADD') {
+    if (isMenuExist) {
+      isMenuExist.amount += 1;
+    } else {
+      prevMenu.push(action.value)
+    }
+    totalItemOnCart(prevMenu);
 
-  switch (action.type) {
-    case 'ON_ADD': {
-      if (isMenuExist) {
-        isMenuExist.amount += 1;
-      } else {
-        prevMenu.push(action.value)
-      }
+    return {
+      menu: prevMenu,
+      amount: theAmount,
+    }
+  }
+  else if (action.type === 'ON_REMOVE') {
+    if (isMenuExist.amount > 1) {
+      isMenuExist.amount -= 1;
       totalItemOnCart(prevMenu);
-
       return {
         menu: prevMenu,
         amount: theAmount,
       }
-      break;
     }
-    case 'ON_REMOVE': {
-      if (isMenuExist.amount > 1) {
-        isMenuExist.amount -= 1;
-        totalItemOnCart(prevMenu);
-        return {
-          menu: prevMenu,
-          amount: theAmount,
-        }
+    else if (isMenuExist.amount <= 1) {
+      const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
+      totalItemOnCart(deleteMenu);
+      return {
+        menu: deleteMenu,
+        amount: theAmount,
       }
-      else if (isMenuExist.amount <= 1) {
-        const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
+    }
+  }
+  else if (action.type === 'ON_CHANGE') {
+    if(isMenuExist) {
+      if(action.value.amount === 0) {
+        const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
         totalItemOnCart(deleteMenu);
         return {
           menu: deleteMenu,
           amount: theAmount,
         }
       }
-      break;
-    } 
-    case 'ON_CHANGE': {
-      if(isMenuExist) {
-        if(action.value.amount === 0) {
-          const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
-          totalItemOnCart(deleteMenu);
-          return {
-            menu: deleteMenu,
-            amount: theAmount,
-          }
-        }
-        else {
-          isMenuExist.amount = action.value.amount
-        }
-      } 
       else {
-        prevMenu.push(action.value)
+        isMenuExist.amount = action.value.amount
       }
+    } 
+    else {
+      prevMenu.push(action.value)
+    }
 
-      totalItemOnCart(prevMenu);
-      return {
-        menu: prevMenu,
-        amount: theAmount,
-      }
+    totalItemOnCart(prevMenu);
+    return {
+      menu: prevMenu,
+      amount: theAmount,
     }
   }
+
+  // switch (action.type) {
+  //   case 'ON_ADD': {
+  //     if (isMenuExist) {
+  //       isMenuExist.amount += 1;
+  //     } else {
+  //       prevMenu.push(action.value)
+  //     }
+  //     totalItemOnCart(prevMenu);
+
+  //     return {
+  //       menu: prevMenu,
+  //       amount: theAmount,
+  //     }
+      
+  //   }
+  //   case 'ON_REMOVE': {
+  //     if (isMenuExist.amount > 1) {
+  //       isMenuExist.amount -= 1;
+  //       totalItemOnCart(prevMenu);
+  //       return {
+  //         menu: prevMenu,
+  //         amount: theAmount,
+  //       }
+  //     }
+  //     else if (isMenuExist.amount <= 1) {
+  //       const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
+  //       totalItemOnCart(deleteMenu);
+  //       return {
+  //         menu: deleteMenu,
+  //         amount: theAmount,
+  //       }
+  //     }
+  //     break;
+  //   } 
+  //   case 'ON_CHANGE': {
+  //     if(isMenuExist) {
+  //       if(action.value.amount === 0) {
+  //         const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
+  //         totalItemOnCart(deleteMenu);
+  //         return {
+  //           menu: deleteMenu,
+  //           amount: theAmount,
+  //         }
+  //       }
+  //       else {
+  //         isMenuExist.amount = action.value.amount
+  //       }
+  //     } 
+  //     else {
+  //       prevMenu.push(action.value)
+  //     }
+
+  //     totalItemOnCart(prevMenu);
+  //     return {
+  //       menu: prevMenu,
+  //       amount: theAmount,
+  //     }
+  //   }
+  // }
 }
 
 function App() {
