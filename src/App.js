@@ -54,7 +54,7 @@ function cartReducer(state, action) {
         }
       }
       break;
-    }
+    } 
     case 'ON_CHANGE': {
       if(isMenuExist) {
         if(action.value.amount === 0) {
@@ -78,7 +78,6 @@ function cartReducer(state, action) {
         menu: prevMenu,
         amount: theAmount,
       }
-      break;
     }
   }
 }
