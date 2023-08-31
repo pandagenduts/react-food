@@ -1,13 +1,15 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import classes from './MenuCard.module.css'
+import CartContext from '../../../context/CartContext';
 
 const MenuCard = (props) => {
   const { name: title, description: desc, price, id } = props.data;
   const inputValue = useRef();
+  const {addItem: ctxAdd} = useContext(CartContext)
+
 
   const submitHandler = event => {
     event.preventDefault();
-
     const theMenu = {
       id: id,
       title: title,
@@ -15,7 +17,7 @@ const MenuCard = (props) => {
       amount: +inputValue.current.value
     }
 
-    props.cartHandler('ON_ADD', theMenu)
+    ctxAdd(theMenu);
   }
 
   return (

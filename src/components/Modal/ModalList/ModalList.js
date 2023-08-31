@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classes from './ModalList.module.css'
+import CartContext from '../../../context/CartContext'
+
 
 function ModalList(props) {
   const {title, price, amount, id} = props.menuData
+  const {addItem, removeItem} = useContext(CartContext)
 
   const onDecrease = () => {
     const theMenu = {
-      id: id,
-      amount: -1
+      id: id
     }
-    props.cartHandler('ON_REMOVE', theMenu)
+    removeItem(theMenu);
   }
 
   const onIncrease = () => {
@@ -17,7 +19,7 @@ function ModalList(props) {
       id: id,
       amount: 1
     }
-    props.cartHandler('ON_ADD', theMenu)
+    addItem(theMenu);
   }
 
   return (

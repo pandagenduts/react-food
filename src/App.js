@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import MenusList from './components/MenusList/MenusList';
 import Modal from './components/Modal/Modal';
-import onCartContext from './context/cartContext';
+import CartProvider from './context/CartProvider';
 
 // the lists of menus
 import menus from './api/dummy-meals'
@@ -11,59 +11,59 @@ import menus from './api/dummy-meals'
 // list of menus from firebase
 import useMealsFirebase from './api/useMealsFirebase';
 
-function cartReducer(state, action) {
-  // console.log(action.type);
-  // console.log(action.value);
-  const prevMenu = [...state.menu]
-  let theAmount = 0;
-  const isMenuExist = prevMenu.find(menu => menu.id === action.value.id)
+// function cartReducer(state, action) {
+//   // console.log(action.type);
+//   // console.log(action.value);
+//   const prevMenu = [...state.menu]
+//   let theAmount = 0;
+//   const isMenuExist = prevMenu.find(menu => menu.id === action.value.id)
 
-  // this bad boi return the total item on cart, based on latest menu thrown at parameter latestMenu
-  function totalItemOnCart(latestMenu) {
-    latestMenu.forEach(menu => {
-      theAmount += +menu.amount
-    })
-  }
+//   // this bad boi return the total item on cart, based on latest menu thrown at parameter latestMenu
+//   function totalItemOnCart(latestMenu) {
+//     latestMenu.forEach(menu => {
+//       theAmount += +menu.amount
+//     })
+//   }
 
-  if (action.type === 'ON_ADD') {
-    if (isMenuExist) {
-      isMenuExist.amount += action.value.amount;
-    } else {
-      prevMenu.push(action.value)
-    }
-    totalItemOnCart(prevMenu);
+//   if (action.type === 'ON_ADD') {
+//     if (isMenuExist) {
+//       isMenuExist.amount += action.value.amount;
+//     } else {
+//       prevMenu.push(action.value)
+//     }
+//     totalItemOnCart(prevMenu);
 
-    return {
-      menu: prevMenu,
-      amount: theAmount,
-    }
-  }
-  else if (action.type === 'ON_REMOVE') {
-    if (isMenuExist.amount > 1) {
-      isMenuExist.amount -= 1;
-      totalItemOnCart(prevMenu);
-      return {
-        menu: prevMenu,
-        amount: theAmount,
-      }
-    }
-    else if (isMenuExist.amount <= 1) {
-      const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
-      totalItemOnCart(deleteMenu);
-      return {
-        menu: deleteMenu,
-        amount: theAmount,
-      }
-    }
-  }
-}
+//     return {
+//       menu: prevMenu,
+//       amount: theAmount,
+//     }
+//   }
+//   else if (action.type === 'ON_REMOVE') {
+//     if (isMenuExist.amount > 1) {
+//       isMenuExist.amount -= 1;
+//       totalItemOnCart(prevMenu);
+//       return {
+//         menu: prevMenu,
+//         amount: theAmount,
+//       }
+//     }
+//     else if (isMenuExist.amount <= 1) {
+//       const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
+//       totalItemOnCart(deleteMenu);
+//       return {
+//         menu: deleteMenu,
+//         amount: theAmount,
+//       }
+//     }
+//   }
+// }
 
 function App() {
   const [isModal, setIsModal] = useState(null)
-  const [onCart, dispatchOnCart] = useReducer(cartReducer, {
-    menu: [],
-    amount: 0,
-  })
+  // const [onCart, dispatchOnCart] = useReducer(cartReducer, {
+  //   menu: [],
+  //   amount: 0,
+  // })
 
   // const { isError: isFetchError, fetchFromFirebase } = useMealsFirebase()
 
@@ -84,24 +84,15 @@ function App() {
     setIsModal(prev => !prev)
   }
 
-  const cartHandler = (type, theMenu) => {
-    dispatchOnCart({ type: type, value: theMenu })
-  }
-
-  const theValue = {
-    menu: [],
-    amount: 0,
-  }
-
   return (
-    <onCartContext.Provider value={theValue}>
-      <Header isModalHandler={isModalHandler} cartAmount={onCart.amount} />
+    <CartProvider>
+      <Header isModalHandler={isModalHandler} />
       <Hero />
 
-      <MenusList theMenus={menus} cartHandler={cartHandler} onCart={onCart} />
-      {isModal && <Modal isModalHandler={isModalHandler} onCart={onCart} cartHandler={cartHandler} />}
+      <MenusList theMenus={menus} />
+      {isModal && <Modal isModalHandler={isModalHandler} />}
 
-    </onCartContext.Provider>
+    </CartProvider>
   );
 }
 
