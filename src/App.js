@@ -1,11 +1,15 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import MenusList from './components/MenusList/MenusList';
 import Modal from './components/Modal/Modal';
+import onCartContext from './context/cartContext';
 
 // the lists of menus
 import menus from './api/dummy-meals'
+
+// list of menus from firebase
+import useMealsFirebase from './api/useMealsFirebase';
 
 function cartReducer(state, action) {
   // console.log(action.type);
@@ -20,10 +24,10 @@ function cartReducer(state, action) {
       theAmount += +menu.amount
     })
   }
-  
-  if(action.type === 'ON_ADD') {
+
+  if (action.type === 'ON_ADD') {
     if (isMenuExist) {
-      isMenuExist.amount += 1;
+      isMenuExist.amount += action.value.amount;
     } else {
       prevMenu.push(action.value)
     }
@@ -52,90 +56,6 @@ function cartReducer(state, action) {
       }
     }
   }
-  else if (action.type === 'ON_CHANGE') {
-    if(isMenuExist) {
-      if(action.value.amount === 0) {
-        const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
-        totalItemOnCart(deleteMenu);
-        return {
-          menu: deleteMenu,
-          amount: theAmount,
-        }
-      }
-      else {
-        isMenuExist.amount = action.value.amount
-      }
-    } 
-    else {
-      prevMenu.push(action.value)
-    }
-
-    totalItemOnCart(prevMenu);
-    return {
-      menu: prevMenu,
-      amount: theAmount,
-    }
-  }
-
-  // switch (action.type) {
-  //   case 'ON_ADD': {
-  //     if (isMenuExist) {
-  //       isMenuExist.amount += 1;
-  //     } else {
-  //       prevMenu.push(action.value)
-  //     }
-  //     totalItemOnCart(prevMenu);
-
-  //     return {
-  //       menu: prevMenu,
-  //       amount: theAmount,
-  //     }
-      
-  //   }
-  //   case 'ON_REMOVE': {
-  //     if (isMenuExist.amount > 1) {
-  //       isMenuExist.amount -= 1;
-  //       totalItemOnCart(prevMenu);
-  //       return {
-  //         menu: prevMenu,
-  //         amount: theAmount,
-  //       }
-  //     }
-  //     else if (isMenuExist.amount <= 1) {
-  //       const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id);
-  //       totalItemOnCart(deleteMenu);
-  //       return {
-  //         menu: deleteMenu,
-  //         amount: theAmount,
-  //       }
-  //     }
-  //     break;
-  //   } 
-  //   case 'ON_CHANGE': {
-  //     if(isMenuExist) {
-  //       if(action.value.amount === 0) {
-  //         const deleteMenu = prevMenu.filter(menu => menu.id !== action.value.id)
-  //         totalItemOnCart(deleteMenu);
-  //         return {
-  //           menu: deleteMenu,
-  //           amount: theAmount,
-  //         }
-  //       }
-  //       else {
-  //         isMenuExist.amount = action.value.amount
-  //       }
-  //     } 
-  //     else {
-  //       prevMenu.push(action.value)
-  //     }
-
-  //     totalItemOnCart(prevMenu);
-  //     return {
-  //       menu: prevMenu,
-  //       amount: theAmount,
-  //     }
-  //   }
-  // }
 }
 
 function App() {
@@ -145,6 +65,21 @@ function App() {
     amount: 0,
   })
 
+  // const { isError: isFetchError, fetchFromFirebase } = useMealsFirebase()
+
+  // useEffect(() => {
+  //   const localMenu = localStorage.getItem('menus');
+  //   console.log(localMenu);
+
+  //   if (!localMenu) {
+  //     (async () => {
+  //       const theMeals = await fetchFromFirebase();
+  //       console.log(theMeals);
+  //     })();
+  //   }
+  // }, [])
+
+
   const isModalHandler = () => {
     setIsModal(prev => !prev)
   }
@@ -153,15 +88,20 @@ function App() {
     dispatchOnCart({ type: type, value: theMenu })
   }
 
+  const theValue = {
+    menu: [],
+    amount: 0,
+  }
+
   return (
-    <>
+    <onCartContext.Provider value={theValue}>
       <Header isModalHandler={isModalHandler} cartAmount={onCart.amount} />
       <Hero />
 
       <MenusList theMenus={menus} cartHandler={cartHandler} onCart={onCart} />
       {isModal && <Modal isModalHandler={isModalHandler} onCart={onCart} cartHandler={cartHandler} />}
 
-    </>
+    </onCartContext.Provider>
   );
 }
 

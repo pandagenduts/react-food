@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import classes from './MenusList.module.css'
 import MenuCard from './MenuCard/MenuCard';
+import onCartContext from '../../context/cartContext';
 
 function MenusList(props) {
   const onCartMenu = props.onCart.menu
+  const onCartCtx = useContext(onCartContext);
 
+  // console.log(onCartCtx);
   return (
     <section className={classes['menus-list']}>
       <div className={classes['wrapper']}>

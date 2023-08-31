@@ -1,30 +1,21 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import classes from './MenuCard.module.css'
 
 const MenuCard = (props) => {
   const { name: title, description: desc, price, id } = props.data;
+  const inputValue = useRef();
 
-  const addHandler = () => {
+  const submitHandler = event => {
+    event.preventDefault();
+
     const theMenu = {
       id: id,
       title: title,
       price: price,
-      amount: 1
+      amount: +inputValue.current.value
     }
 
     props.cartHandler('ON_ADD', theMenu)
-  }
-
-  const onChangeHandler = event => {
-    if(+event.target.value >= 0) {
-      const theMenu = {
-        id: id,
-        title: title,
-        price: price,
-        amount: +event.target.value,
-      }
-      props.cartHandler('ON_CHANGE', theMenu)
-    }
   }
 
   return (
@@ -37,14 +28,16 @@ const MenuCard = (props) => {
       </div>
 
       <div className={classes['inner_right']}>
-        <div className={classes['wrapper']}>
-          <label htmlFor="amount">Amount</label>
-          <input type="number" name="amount" id="amount" onChange={onChangeHandler} value={props.onCartAmount}/>
-        </div>
-        <button onClick={addHandler}>+ Add</button>
+        <form onSubmit={submitHandler}>
+          <div className={classes['wrapper']}>
+            <label htmlFor="amount">Amount</label>
+            <input type="number" name="amount" id="amount" defaultValue={1} min={1} max={5} ref={inputValue}/>
+          </div>
+          <button>+ Add</button>
+        </form>
       </div>
 
-    </div>
+    </div >
   )
 }
 
