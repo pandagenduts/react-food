@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import classes from './MenusList.module.css'
 import MenuCard from './MenuCard/MenuCard';
+import { Skeleton } from 'antd';
 
 function MenusList(props) {
 
-  let menusListContent = <h3>Fetching the menu, please wait...</h3>
+  let menusListContent = <Skeleton active />
 
   if (props.theMenus) {
     menusListContent = props.theMenus?.map((item) => (

@@ -21,22 +21,19 @@ function App() {
   useEffect(() => {
     const localMenu = JSON.parse(localStorage.getItem('menus'));
 
-    // console.log(localMenu);
-    // if(localMenu) {
-    //   setMenusV2(localMenu);
-    // }
-    // else if (!localMenu) {
-    //   (async () => {
-    //     console.log('do the fetch');
-    //     const theMeals = await fetchFromFirebase();
-    //     console.log('fetch done');
-    //     // console.log(theMeals);
-    //     setMenusV2(theMeals);
-    //   })();
-    // }
+    if(localMenu) {
+      setMenusV2(localMenu);
+    }
+    else if (!localMenu) {
+      (async () => {
+        const theMeals = await fetchFromFirebase({
+          method: 'GET',
+          url: 'https://react-http-practice-e4a0e-default-rtdb.asia-southeast1.firebasedatabase.app/react-food.json/',
+        });
+        setMenusV2(theMeals);
+      })();
+    }
   }, [])
-
-  console.log(menusV2);
 
   const isModalHandler = () => {
     setIsModal(prev => !prev)

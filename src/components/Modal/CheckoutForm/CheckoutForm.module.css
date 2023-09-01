@@ -1,0 +1,53 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 2em 0;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.input-wrapper label {
+  font-weight: 600;
+}
+
+.input-wrapper input {
+  padding: 0.5em;
+}
+
+.button-wrapper {
+  display: flex;
+  gap: 1em;
+  justify-content: flex-end;
+  margin-top: 4em;
+}
+
+.button-wrapper button {
+  border: none;
+  padding: 1em 2em;
+  outline: 1px solid #8a2b0633;
+  cursor: pointer;
+  border-radius: 2em;
+  transition: 0.3s;
+}
+
+.button-wrapper button:hover {
+  transform: scale(1.05);
+}
+
+.button-wrapper button:first-child {
+  /* color: #8a2b06; */
+  background-color: white;
+  
+}
+
+.button-wrapper button:last-child {
+  background-color: #8a2b06;
+  color: white;
+  
+}
