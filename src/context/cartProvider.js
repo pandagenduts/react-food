@@ -62,8 +62,6 @@ const CartProvider = (props) => {
     amount: 0,
   })
   
-  console.log(onCart);
-
   const onAddHandler = (item) => {
     dispatchOnCart({type: 'ON_ADD', value: item})
   }
