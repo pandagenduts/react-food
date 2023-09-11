@@ -13,7 +13,7 @@ const useInputValidation = (validation) => {
     setIsTouched(true);
   }
 
-  const isError = validation(value, isTouched);
+  const isValid = validation(value, isTouched);
 
   const reset = () => {
     setValue('')
@@ -24,7 +24,7 @@ const useInputValidation = (validation) => {
     value,
     onChange,
     onBlur,
-    isError,
+    isValid,
     reset,
   }
 }

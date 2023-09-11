@@ -1,11 +1,14 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import classes from './CheckoutForm.module.css'
 import useInputValidation from '../../../hooks/input-validation'
 import Total from '../Total/Total'
 import CartContext from '../../../context/CartContext'
 import useMealsFirebase from '../../../api/useMealsFirebase'
 
+let init = true;
+
 const CheckoutForm = (props) => {
+  const [allValid, setAllValid] = useState(false);
   const nameRef = useRef(null);
   const addressRef = useRef(null);
   const emailRef = useRef(null);
@@ -13,32 +16,26 @@ const CheckoutForm = (props) => {
   const {menu: onCartMenu, totalPrice} = useContext(CartContext);
   const { fetchFromFirebase } = useMealsFirebase();
 
-  // console.log(onCartMenu);
-  // console.log(totalPrice);
-
   const {
     value: nameValue,
     onChange: nameOnChange,
     onBlur: nameOnBlur,
-    isError: nameIsError,
-    reset: nameReset,
-  } = useInputValidation((theValue, isTouched) => !theValue.length > 0 && isTouched)
+    isValid: nameIsValid,
+  } = useInputValidation((theValue, isTouched) => theValue.length > 0 && isTouched)
 
   const {
     value: addressValue,
     onChange: addressOnChange,
     onBlur: addressOnBlur,
-    isError: addressIsError,
-    reset: addressReset,
-  } = useInputValidation((theValue, isTouched) => !theValue.length > 0 && isTouched)
+    isValid: addressIsValid,
+  } = useInputValidation((theValue, isTouched) => theValue.length > 0 && isTouched)
 
   const {
     value: emailValue,
     onChange: emailOnChange,
     onBlur: emailOnBlur,
-    isError: emailIsError,
-    reset: emailReset,
-  } = useInputValidation((theValue, isTouched) => !theValue.includes('@') && isTouched)
+    isValid: emailIsValid,
+  } = useInputValidation((theValue, isTouched) => theValue.includes('@') && isTouched)
 
   const submitHandler = event => {
     event.preventDefault();
@@ -46,17 +43,17 @@ const CheckoutForm = (props) => {
     addressOnBlur();
     emailOnBlur();
 
-    if(nameIsError) {
+    if(!nameIsValid) {
       nameRef.current.focus();
     }
-    else if (addressIsError) {
+    else if (!addressIsValid) {
       addressRef.current.focus();
     }
-    else if (emailIsError) {
+    else if (!emailIsValid) {
       emailRef.current.focus();
     }
 
-    if(!nameIsError && !addressIsError && !emailIsError) {
+    if(allValid) {
       const orderMenu = []
       onCartMenu.forEach(menu => {
         orderMenu.push({
@@ -85,23 +82,32 @@ const CheckoutForm = (props) => {
     }
   }
 
+  useEffect(() => {
+    if (init) {
+      init = false;
+      return;
+    }
+
+    setAllValid()
+  }, [])
+
   return (
     <div>
       <form className={classes['form']} onSubmit={submitHandler}>
         <div className={classes['input-wrapper']}>
           <label htmlFor="name">Name</label>
           <input type="text" id='name' name='name' onChange={nameOnChange} onBlur={nameOnBlur} value={nameValue} ref={nameRef}/>
-          {nameIsError && <p>Name cant be empty.</p>}
+          {nameIsValid && <p>Name cant be empty.</p>}
         </div>
         <div className={classes['input-wrapper']}>
           <label htmlFor="address">Address</label>
           <input type="text" id='address' name='address' onChange={addressOnChange} onBlur={addressOnBlur} value={addressValue} ref={addressRef} />
-          {addressIsError && <p>Address cant be empty.</p>}
+          {addressIsValid && <p>Address cant be empty.</p>}
         </div>
         <div className={classes['input-wrapper']}>
           <label htmlFor="email">Email</label>
           <input type="email" id='email' name='email' onChange={emailOnChange} onBlur={emailOnBlur} value={emailValue} ref={emailRef}/>
-          {emailIsError && <p>Please enter a valid email.</p>}
+          {emailIsValid && <p>Please enter a valid email.</p>}
         </div>
         <Total theTotal={props.theTotal} />
         <div className={classes['button-wrapper']}>
