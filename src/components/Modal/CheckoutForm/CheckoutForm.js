@@ -95,7 +95,7 @@ const CheckoutForm = (props) => {
     }
 
     setAllValid(nameIsValid && addressIsValid && emailIsValid)
-  }, [nameValue, nameIsTouched, addressValue, addressIsTouched, emailValue, emailIsTouched])
+  }, [nameIsValid, nameIsTouched, addressIsValid, addressIsTouched, emailIsValid, emailIsTouched])
 
   return (
     <div>

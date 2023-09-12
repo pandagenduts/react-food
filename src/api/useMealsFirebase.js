@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const useMealsFirebase = () => {
   const [isError, setIsError] = useState(null)
@@ -7,7 +7,7 @@ const useMealsFirebase = () => {
   // method, url and value is mandatory for POST method
   // for GET method, only first 2 is mandatory
 
-  const fetchFromFirebase = async (fetchConfig) => {
+  const fetchFromFirebase = useCallback(async (fetchConfig) => {
     try {
       console.log(fetchConfig);
       const requestOption = {
@@ -42,7 +42,7 @@ const useMealsFirebase = () => {
     catch (error) {
       setIsError(error.message)
     }
-  }
+  }, [])
 
   return {
     isError,

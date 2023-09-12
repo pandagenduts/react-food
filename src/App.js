@@ -14,23 +14,15 @@ function App() {
 
   const { fetchFromFirebase } = useMealsFirebase()
 
-  localStorage.removeItem('menus');
   useEffect(() => {
-    const localMenu = JSON.parse(localStorage.getItem('menus'));
-
-    if(localMenu) {
-      setMenusV2(localMenu);
-    }
-    else if (!localMenu) {
-      (async () => {
-        const theMeals = await fetchFromFirebase({
-          method: 'GET',
-          url: 'https://react-http-practice-e4a0e-default-rtdb.asia-southeast1.firebasedatabase.app/react-food.json/',
-        });
-        setMenusV2(theMeals);
-      })();
-    }
-  }, [])
+    (async () => {
+      const theMeals = await fetchFromFirebase({
+        method: 'GET',
+        url: 'https://react-http-practice-e4a0e-default-rtdb.asia-southeast1.firebasedatabase.app/react-food.json/',
+      });
+      setMenusV2(theMeals);
+    })();
+  }, [fetchFromFirebase])
 
   const isModalHandler = () => {
     setIsModal(prev => !prev)
