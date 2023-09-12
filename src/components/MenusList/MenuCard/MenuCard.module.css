@@ -12,6 +12,13 @@
   gap: 1em;
 }
 
+.inner_right form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: flex-end;
+}
+
 .inner_right input {
   width: 100px;
   border: none;
@@ -32,6 +39,48 @@
   cursor: pointer;
 }
 
+.inner_left h4 {
+  font-size: 1.2em;
+  margin-bottom: 0.3em;
+}
+
+.inner_left span {
+  font-weight: 600;
+}
+
 #amount {
   width: 100px;
+}
+
+
+
+@media (max-width: 550px) {
+  .card {
+    flex-direction: column;
+    gap: 2em;
+    padding: 1.5em 0;
+    /* background-color: #ffffffad; */
+  }
+
+  .inner_left h4,
+  .inner_left p,
+  .inner_left span {
+    text-align: center;
+  }
+
+  .inner_left span {
+    display: block;
+  }
+
+  .inner_left p {
+    margin-bottom: 1em;
+  }
+
+  .inner_right {
+    align-items: center;
+  }
+
+  .inner_right form {
+    align-items: stretch;
+  }
 }

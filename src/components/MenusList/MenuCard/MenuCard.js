@@ -23,7 +23,7 @@ const MenuCard = (props) => {
   return (
     <div className={`${classes['card']} menu-card`}>
 
-      <div className="inner_left">
+      <div className={classes['inner_left']}>
         <h4>{title}</h4>
         <p>{desc}</p>
         <span>${price}</span>

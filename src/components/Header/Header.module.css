@@ -46,3 +46,34 @@
   background-color: #a33408;
   border-radius: 3em;
 }
+
+@media (max-width: 550px) {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+  }
+
+  .container {
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 1.5em;
+  }
+
+  .cart {
+    padding: 0.75em 1.5em;
+  }
+
+  .cart svg {
+    margin-right: 1em;
+  }
+
+  .button-label {
+    display: none;
+  }
+
+
+}
