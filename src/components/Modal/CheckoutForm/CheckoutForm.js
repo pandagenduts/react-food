@@ -82,6 +82,8 @@ const CheckoutForm = (props) => {
         url: 'https://react-http-practice-e4a0e-default-rtdb.asia-southeast1.firebasedatabase.app/react-food-orders.json/',
         value: theOrder,
       });
+
+      props.submitSuccessHandler();
     }
   }
 

@@ -9,6 +9,7 @@ import CheckoutForm from './CheckoutForm/CheckoutForm';
 function Modal(props) {
   const { menu: menuOnCart } = useContext(CartContext);
   const [showCheckoutForm, setShowCheckoutForm] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   let menuList = <p>Your cart feels a bit lonely. <br />Explore our menu and add some delicious items to your cart!</p>;
 
@@ -27,13 +28,27 @@ function Modal(props) {
     setShowCheckoutForm(false);
   }
 
+  const submitSuccessHandler = () => {
+    setSubmitSuccess(true);
+    // console.log('handler');
+  }
+
+  if (submitSuccess) {
+    menuList = <>
+      <p>Your order has been successfully submitted!</p>
+      <div className={classes['button-wrapper']}>
+        <button onClick={closeTheForm}>Close</button>
+      </div>
+    </>
+  }
+
   return (
     <div className={classes['modal']}>
       <div className={classes['overlay']} onClick={closeTheForm}></div>
       <div className={classes['content']}>
         {menuList}
 
-        {showCheckoutForm && <CheckoutForm onCloseForm={closeTheForm} />}
+        {showCheckoutForm && !submitSuccess && <CheckoutForm onCloseForm={closeTheForm} submitSuccessHandler={submitSuccessHandler} />}
 
         {menuOnCart.length !== 0 && !showCheckoutForm ? <Total /> : ''}
 
