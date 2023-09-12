@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import classes from './MenusList.module.css'
 import MenuCard from './MenuCard/MenuCard';
 import { Skeleton } from 'antd';
