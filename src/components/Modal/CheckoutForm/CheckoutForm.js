@@ -20,6 +20,7 @@ const CheckoutForm = (props) => {
     value: nameValue,
     onChange: nameOnChange,
     onBlur: nameOnBlur,
+    isTouched: nameIsTouched,
     isValid: nameIsValid,
   } = useInputValidation((theValue, isTouched) => theValue.length > 0 && isTouched)
 
@@ -27,6 +28,7 @@ const CheckoutForm = (props) => {
     value: addressValue,
     onChange: addressOnChange,
     onBlur: addressOnBlur,
+    isTouched: addressIsTouched,
     isValid: addressIsValid,
   } = useInputValidation((theValue, isTouched) => theValue.length > 0 && isTouched)
 
@@ -34,10 +36,11 @@ const CheckoutForm = (props) => {
     value: emailValue,
     onChange: emailOnChange,
     onBlur: emailOnBlur,
+    isTouched: emailIsTouched,
     isValid: emailIsValid,
   } = useInputValidation((theValue, isTouched) => theValue.includes('@') && isTouched)
 
-  const submitHandler = event => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     nameOnBlur();
     addressOnBlur();
@@ -74,7 +77,7 @@ const CheckoutForm = (props) => {
         totalPrice: totalPrice,
       }
 
-      fetchFromFirebase({
+      await fetchFromFirebase({
         method: 'POST',
         url: 'https://react-http-practice-e4a0e-default-rtdb.asia-southeast1.firebasedatabase.app/react-food-orders.json/',
         value: theOrder,
@@ -88,8 +91,8 @@ const CheckoutForm = (props) => {
       return;
     }
 
-    setAllValid()
-  }, [])
+    setAllValid(nameIsValid && addressIsValid && emailIsValid)
+  }, [nameValue, nameIsTouched, addressValue, addressIsTouched, emailValue, emailIsTouched])
 
   return (
     <div>
@@ -97,17 +100,17 @@ const CheckoutForm = (props) => {
         <div className={classes['input-wrapper']}>
           <label htmlFor="name">Name</label>
           <input type="text" id='name' name='name' onChange={nameOnChange} onBlur={nameOnBlur} value={nameValue} ref={nameRef}/>
-          {nameIsValid && <p>Name cant be empty.</p>}
+          {!nameIsValid && nameIsTouched && <p>Name cant be empty.</p>}
         </div>
         <div className={classes['input-wrapper']}>
           <label htmlFor="address">Address</label>
           <input type="text" id='address' name='address' onChange={addressOnChange} onBlur={addressOnBlur} value={addressValue} ref={addressRef} />
-          {addressIsValid && <p>Address cant be empty.</p>}
+          {!addressIsValid && addressIsTouched && <p>Address cant be empty.</p>}
         </div>
         <div className={classes['input-wrapper']}>
           <label htmlFor="email">Email</label>
           <input type="email" id='email' name='email' onChange={emailOnChange} onBlur={emailOnBlur} value={emailValue} ref={emailRef}/>
-          {emailIsValid && <p>Please enter a valid email.</p>}
+          {!emailIsValid && emailIsTouched && <p>Please enter a valid email.</p>}
         </div>
         <Total theTotal={props.theTotal} />
         <div className={classes['button-wrapper']}>
