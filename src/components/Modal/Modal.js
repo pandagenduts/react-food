@@ -30,7 +30,6 @@ function Modal(props) {
 
   const submitSuccessHandler = () => {
     setSubmitSuccess(true);
-    // console.log('handler');
   }
 
   if (submitSuccess) {

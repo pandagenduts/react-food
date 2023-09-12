@@ -20,6 +20,11 @@
   padding: 0.5em;
 }
 
+.info {
+  font-size: 0.8em;
+  font-weight: 400;
+}
+
 .button-wrapper {
   display: flex;
   gap: 1em;

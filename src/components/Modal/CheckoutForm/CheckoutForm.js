@@ -13,7 +13,7 @@ const CheckoutForm = (props) => {
   const addressRef = useRef(null);
   const emailRef = useRef(null);
 
-  const {menu: onCartMenu, totalPrice} = useContext(CartContext);
+  const {menu: onCartMenu, totalPrice, clearCart} = useContext(CartContext);
   const { fetchFromFirebase } = useMealsFirebase();
 
   const {
@@ -84,6 +84,7 @@ const CheckoutForm = (props) => {
       });
 
       props.submitSuccessHandler();
+      clearCart();
     }
   }
 
@@ -114,6 +115,7 @@ const CheckoutForm = (props) => {
           <input type="email" id='email' name='email' onChange={emailOnChange} onBlur={emailOnBlur} value={emailValue} ref={emailRef}/>
           {!emailIsValid && emailIsTouched && <p>Please enter a valid email.</p>}
         </div>
+        <h4 className={classes['info']}>*Just type random values :)</h4>
         <Total theTotal={props.theTotal} />
         <div className={classes['button-wrapper']}>
           <button onClick={props.onCloseForm}>Close</button>

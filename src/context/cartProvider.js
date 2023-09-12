@@ -1,12 +1,6 @@
 import React, { useReducer } from 'react'
 import CartContext from './CartContext'
 
-
-
-// use like this:
-// formatter.format(yourValue);
-// const total = formatter.format(props.theTotal);
-
 const cartReducer = (state, action) => {
   // console.log(action.type);
   // console.log(action.value);
@@ -26,7 +20,12 @@ const cartReducer = (state, action) => {
   let theAmount = 0;
   let totalPrice = 0;
   let formattedTotalPrice = '';
-  const isMenuExist = prevMenu.find(menu => menu.id === action.value.id)
+
+  let isMenuExist = null;
+
+  if(action.value) {
+    isMenuExist = prevMenu.find(menu => menu.id === action.value.id)
+  }
 
   // this bad boi return the total item on cart, based on latest menu thrown at parameter latestMenu
   function totalItemOnCart(latestMenu) {
@@ -82,6 +81,13 @@ const cartReducer = (state, action) => {
       }
     }
   }
+  else if (action.type === 'CLEAR_CART') {
+    return {
+      menu: [],
+      amount: 0,
+      totalPrice: 0,
+    }
+  }
 
 }
 
@@ -100,12 +106,17 @@ const CartProvider = (props) => {
     dispatchOnCart({type: 'ON_REMOVE', value: item})
   }
 
+  const onClearCart = () => {
+    dispatchOnCart({ type: 'CLEAR_CART' });
+  }
+
   const contextValue = {
     menu: onCart.menu,
     amount: onCart.amount,
     totalPrice: onCart.totalPrice,
     addItem: onAddHandler,
     removeItem: onRemoveHandler,
+    clearCart: onClearCart,
   }
 
   return (
