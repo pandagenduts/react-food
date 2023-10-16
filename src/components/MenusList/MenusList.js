@@ -1,22 +1,25 @@
 import React from 'react'
 import classes from './MenusList.module.css'
 import MenuCard from './MenuCard/MenuCard';
+import { Skeleton } from 'antd';
 
 function MenusList(props) {
-  const onCartMenu = props.onCart.menu
+
+  let menusListContent = <Skeleton active />
+
+  if (props.theMenus) {
+    menusListContent = props.theMenus?.map((item) => (
+      <MenuCard data={item} key={item.id} />
+    ))
+  }
 
   return (
     <section className={classes['menus-list']}>
       <div className={classes['wrapper']}>
-        {props.theMenus.map((item) => {
-          const isMenuExist = onCartMenu.find(menu => menu.id === item.id)
-          let onCartAmount = 0;
-          if (onCartMenu.length !== 0 && isMenuExist) {
-            onCartAmount = isMenuExist.amount;
-          }
-
-          return (<MenuCard data={item} key={item.id} cartHandler={props.cartHandler} onCartAmount={onCartAmount}/>)
-        })}
+        {/* {props.theMenus?.map((item) => (
+          <MenuCard data={item} key={item.id} />
+        ))} */}
+        {menusListContent}
       </div>
     </section>
   )

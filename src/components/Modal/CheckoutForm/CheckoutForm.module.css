@@ -1,37 +1,28 @@
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
+.form {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1em;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 2em 0;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  background-color: #222222be;
-  z-index: 9;
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
-.content {
-  background-color: whitesmoke;
+.input-wrapper label {
+  font-weight: 600;
+}
 
-  padding: 2em;
-  width: 100%;
-  max-width: 700px;
-  z-index: 99;
+.input-wrapper input {
+  padding: 0.5em;
+}
 
-  max-height: 600px;
-  overflow-y: auto;
+.info {
+  font-size: 0.8em;
+  font-weight: 400;
 }
 
 .button-wrapper {
