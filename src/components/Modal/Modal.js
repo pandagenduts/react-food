@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import classes from './Modal.module.css'
 import ModalList from './ModalList/ModalList'
 import Total from './Total/Total'
@@ -18,6 +18,10 @@ function Modal(props) {
       <ModalList menuData={menu} key={menu.id} cartHandler={props.cartHandler} />
     ))
   }
+
+  useEffect(() => {
+    if(menuOnCart.length === 0) setShowCheckoutForm(false);
+  }, [menuOnCart])
 
   const toCheckout = () => {
     setShowCheckoutForm(true);
