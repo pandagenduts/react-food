@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { 
+  useState,
+  //  useEffect
+  } from 'react'
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import MenusList from './components/MenusList/MenusList';
@@ -7,7 +10,7 @@ import CartProvider from './context/CartProvider';
 import DUMMY_MEALS from './api/dummy-meals';
 
 // list of menus from firebase
-import useMealsFirebase from './api/useMealsFirebase';
+// import useMealsFirebase from './api/useMealsFirebase';
 
 function App() {
   const [isModal, setIsModal] = useState(null)
