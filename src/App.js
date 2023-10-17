@@ -14,7 +14,7 @@ import DUMMY_MEALS from './api/dummy-meals';
 
 function App() {
   const [isModal, setIsModal] = useState(null)
-  const [menusV2, setMenusV2] = useState(DUMMY_MEALS)
+  // const [menusV2, setMenusV2] = useState(DUMMY_MEALS)
 
   // const { fetchFromFirebase } = useMealsFirebase()
 
@@ -37,7 +37,7 @@ function App() {
       <Header isModalHandler={isModalHandler} />
       <Hero />
 
-      <MenusList theMenus={menusV2} />
+      <MenusList theMenus={DUMMY_MEALS} />
       
       {isModal && <Modal isModalHandler={isModalHandler} />}
 
