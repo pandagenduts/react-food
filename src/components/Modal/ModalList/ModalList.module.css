@@ -28,7 +28,7 @@
 
 .right {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 1em;
 }
 
@@ -36,7 +36,11 @@
   border: none;
   background-color: white;
   color: #8a2b06;
-  padding: 0.5em 1em;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   border-radius: 0.5em;
   transition: 0.3s;
