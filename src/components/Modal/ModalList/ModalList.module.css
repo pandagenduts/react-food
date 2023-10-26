@@ -49,3 +49,9 @@
   background-color: #8a2b06;
   color: white;
 }
+
+@media (max-width: 550px) {
+  .quantity {
+    margin-left: 2em; 
+  }
+}
