@@ -83,8 +83,8 @@ const CheckoutForm = (props) => {
         value: theOrder,
       });
 
-      props.submitSuccessHandler();
       clearCart();
+      props.submitSuccessHandler();
     }
   }
 

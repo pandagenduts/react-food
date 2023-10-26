@@ -5,7 +5,6 @@ import backgroundImage from '../../assets/react-food-cover.jpg'
 function Hero() {
   return (
     <section style={{backgroundImage: `url(${backgroundImage})`}} className={classes['hero']}>
-      {/* <div  className={classes['background']}></div> */}
       <div className={classes['content']}>
 
         <h1>Delicious Food, Delivered To You</h1>

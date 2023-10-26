@@ -6,7 +6,7 @@ const DUMMY_MEALS = [
     price: 14.99,
   },
   {
-    id: 'm4',
+    id: 'm2',
     name: 'Caprese Salad',
     description: 'Fresh mozzarella, ripe tomatoes, basil, and balsamic glaze',
     price: 12.99,

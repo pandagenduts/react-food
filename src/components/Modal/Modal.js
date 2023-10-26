@@ -37,12 +37,7 @@ function Modal(props) {
   }
 
   if (submitSuccess) {
-    menuList = <>
-      <p>Your order has been successfully submitted!</p>
-      <div className={classes['button-wrapper']}>
-        <button onClick={closeTheForm}>Close</button>
-      </div>
-    </>
+    menuList = <p>Your order has been successfully submitted!</p>
   }
 
   return (
